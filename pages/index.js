@@ -11,6 +11,7 @@ export default function Home() {
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState({});
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`;
 
@@ -19,10 +20,28 @@ export default function Home() {
     setLoading(true);
     axios.get(url).then((response) => {
       setWeather(response.data);
+      setMessage('')
+    }).catch(error =>  {
+      setMessage('Please enter a valid city name')
     });
     setCity("");
     setLoading(false);
   };
+
+  // const fetchWeather = (e) => {
+  //   try {
+  //     e.preventDefault();
+  //     setLoading(true);
+  //    axios.get(url).then((response) => {
+  //       setWeather(response.data);
+  //     });
+  //     setCity("");
+  //     setLoading(false);
+  //   } catch (error) {
+  //     setErr(true);
+  //     alert(error);
+  //   }
+  // };
 
   if (loading) {
     return <Spinner />;
@@ -61,6 +80,13 @@ export default function Home() {
               <BsSearch size={20} />
             </button>
           </form>
+        </div>
+        {/* <p className={message ? 'relative p-5 bg-red-400 mt-2 text-center transition duration-300' : ''}>{message}</p> */}
+
+        <div
+          className={message ? "relative m-auto mt-4 bg-red-400 w-80 rounded z-10 transition duration-300":"hidden"}
+        >
+          <p className="text-center py-3 text-white">{message}</p>
         </div>
 
         {/* {weather} */}
