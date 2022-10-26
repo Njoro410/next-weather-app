@@ -21,7 +21,7 @@ export default function Home() {
     axios.get(url).then((response) => {
       setWeather(response.data);
       setMessage('')
-    }).catch(error =>  {
+    }).catch(error => {
       setMessage('Please enter a valid city name')
     });
     setCity("");
@@ -81,17 +81,15 @@ export default function Home() {
             </button>
           </form>
         </div>
-        {/* <p className={message ? 'relative p-5 bg-red-400 mt-2 text-center transition duration-300' : ''}>{message}</p> */}
-
         <div
-          className={message ? "relative m-auto mt-4 bg-red-400 w-80 rounded z-10 transition duration-300":"hidden"}
+          className={message ? "relative m-auto mt-4 bg-red-400 w-80 rounded z-10 transition duration-300" : "hidden"}
         >
           <p className="text-center py-3 text-white">{message}</p>
         </div>
 
         {/* {weather} */}
+        {message ? '' : weather.main && <Weather data={weather} />}
 
-        {weather.main && <Weather data={weather} />}
       </div>
     );
   }
